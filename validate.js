@@ -21,11 +21,8 @@ let checks = {
         return result;
       },
 
-
-
     required : ({rule_name,field_name,rule_value,field_data}) => {
         let result = true;
-        console.log(isObject(field_data), field_data , 'required status in if + data' );
         if((rule_value)) {
             if (isObject(field_data) || (field_data === null) || (field_data === undefined) ) {
                 result =    checks.push_err({rule_name,field_name,field_data});
@@ -51,9 +48,7 @@ let checks = {
 
     minLength :({rule_name,field_name,rule_value,field_data}) => {
         let result = true;
-     
-        console.log(typeof field_data, 'fil name min t');
-    
+      
         if  (typeof field_data === 'number') {
         result =  checks.push_err({rule_name,field_name,field_data});
         }
@@ -140,8 +135,6 @@ let checks = {
         else return result;
 
     }
-
- 
     
 }
 
@@ -194,7 +187,6 @@ function validate(data, rules) {
 
             if (Object.getOwnPropertyNames(data).length === 0) {
                 Object.entries(rules[field]).forEach(rule => {
-                    console.log(rule[0], 'ruleHHHH');
                     if (rule[0] === 'required') {
                         options = {
                             rule_name : rule[0],
