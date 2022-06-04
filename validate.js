@@ -1,6 +1,7 @@
 let checks = {
     result : true,
     errors : [],
+
     push_err: ({...error_data}) =>{
         if (isObject(error_data.field_data)) error_data.field_data = undefined;
         checks.result = false;
@@ -32,7 +33,6 @@ let checks = {
         else return result;
     },
 
-      
     maxLength : ({rule_name,field_name,rule_value,field_data}) => {
         let result = true;
         if  (typeof field_data === 'number') {
@@ -62,7 +62,6 @@ let checks = {
         
     },
     
-
     min : ({rule_name,field_name,rule_value,field_data}) => {
         let result = true;
         if (field_data < rule_value || isNaN(field_data)) {
@@ -75,7 +74,6 @@ let checks = {
     },
     
     max : ({rule_name,field_name,rule_value,field_data}) => {
-
         let result = true;
         if (field_data > rule_value || isNaN(field_data)) {
             result = checks.push_err({rule_name,field_name,field_data});
@@ -84,18 +82,16 @@ let checks = {
         else return result;
     },
 
-  isString : ({rule_name,field_name,rule_value,field_data}) => {
+    isString : ({rule_name,field_name,rule_value,field_data}) => {
     let result = true;
         if (rule_value) {
             if (typeof field_data !== 'string' && field_data !== null) {
-                checkError(field_name)
                 result =  checks.push_err({rule_name, field_name, field_data });
             }
         }
         if(result == true) return  checks.notify ({rule_name,field_name,field_data}, 'no_error');
         else return result;
   },
-
 
     isEmail : ({rule_name,field_name,rule_value,field_data}) => {
         let result = true;
@@ -109,7 +105,6 @@ let checks = {
         }
         if(result == true) return checks.notify ({rule_name,field_name,field_data}, 'no_error');
         else return result;
-
     },
 
     isBoolean : ({rule_name,field_name,rule_value,field_data}) => {
@@ -138,22 +133,10 @@ let checks = {
     
 }
 
-function checkError (field_name) {
-    checks.errors.forEach((error,index) => {
-        if ( error.field == field_name) {
-            checks.errors.splice(index, 1)
-        }    
-    })
-}
-
-
-
 function isObject(val) {
     if (val === null) { return false;}
     return ( (typeof val === 'function') || (typeof val === 'object') );
-  }
-
-
+}
 
 function validate(data, rules) {
     let results = {};
@@ -169,9 +152,9 @@ function validate(data, rules) {
         Object.keys(rules).forEach(field => {
             let options = {
                 rule_name : undefined,
-                rule_value : undefined,
+                rule_value: undefined,
                 field_name : undefined,
-                field_data :undefined,
+                field_data : undefined,
                 }     
             if (data.hasOwnProperty(field)) {
                 Object.entries(rules[field]).forEach(rule => {
@@ -216,9 +199,7 @@ function validate(data, rules) {
           holder.errors = [];
           holder.result = true;
         }
-
     })
-
 
 return holder;
       
@@ -228,7 +209,7 @@ return holder;
 var rules = {
      name: { required: true, minLength: 4, maxLength: 4},
      name: { isString: true} ,
-     age: { min: 10, max: 16, isNumber: true  },
+     age:  { min: 10, max: 16, isNumber: true  },
 
   }
 var data = {
@@ -238,9 +219,6 @@ var data = {
     
 };
 
-
- console.log(validate(data, rules)); 
- 
-
+console.log(validate(data, rules)); 
 module.exports = validate;
 
