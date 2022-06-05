@@ -1,3 +1,9 @@
+/** 
+ * @description  The above code is a validation library that checks if the data passed to it is valid.
+ * @param {Object} options 
+ * @return {result: boolean, errors: array} Result operation validation  
+ * */ 
+
 let checks = {
     result : true,
     errors : [],
@@ -137,6 +143,13 @@ function isObject(val) {
     if (val === null) { return false;}
     return ( (typeof val === 'function') || (typeof val === 'object') );
 }
+
+/**
+ * @description  Main function, it takes two arguments, the first one is an object with data to be validated, the second one is an object with rules to be applied to the data
+ * @param {object} data - the data to be validated
+ * @param {object}  rules - Rules object
+ * @return {holder: boolean, errors: array} 
+ */
 
 function validate(data, rules) {
     let results = {};
